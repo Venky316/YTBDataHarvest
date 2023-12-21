@@ -1,2 +1,2 @@
 # YTBDataHarvest
-This project aims to extract Youtube Data using Google API and develop an app through Streamlit
+This project aims to buil a simple UI with Streamlit, retrieving data from the YouTube API, storing it in a MongoDB data lake, migrating it to a SQL data warehouse, querying the data warehouse with SQL, and displaying the data in the Streamlit app.
