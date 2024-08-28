@@ -200,7 +200,29 @@ else:
         #9th question    
     st.write('9. What is the average duration of all videos in each channel, and what are their corresponding channel names?')
     getninebut = st.button('Ans', key='but9')
+    if(getninebut):
+        getchannlist = getchannpd['Channel_Name'].tolist()
+        getavglist = []
+        for i in getchannlist:
+            filtpd = getvideospd[getvideospd['Channel_Name'] == i]
+            for j in filtpd.index:
+                if(getvideospd.loc[j,'Duration'].find('H') > 0):
+                    filtpd.drop(j,inplace=True)
 
+            for j in filtpd.index:
+                splitval = getvideospd.loc[j,'Duration'].split(' ')
+                if(len(splitval) == 2):
+                    filtpd.loc[j,'Duration'] = int(splitval[0])
+                else:
+                    if(splitval[2] == ''):
+                        filtpd.loc[j,'Duration'] = ( int(splitval[0]) * 60 )
+                    else:
+                        filtpd.loc[j,'Duration'] = ( int(splitval[0]) * 60 ) + ( int(splitval[2]) )
+            getavg = round(filtpd['Duration'].mean(),2)
+            getavglist.append({'Channel_Name':i,'Average Video Duration (in seconds)':getavg})
+        avgdf = pd.DataFrame(getavglist)
+        st.dataframe(avgdf)
+    
         #10th question
     st.write('10. Which videos have the highest number of comments, and what are their corresponding channel names?')
     gettenbut = st.button('Ans', key='but10')
